@@ -9,19 +9,16 @@ def mainFunction():
     csvFile = 'cp-automation-tool-server-list.csv'
     main_USEA_list, main_USWE_list = sortServerList(csvFile)
 
-    print(main_USEA_list)
-    print(main_USWE_list)
+
     if not main_USEA_list:
         print ("No USEA server in the list.")
     else:
-        #setSSMCommandSetting(main_USEA_list,'us-east-1')
-        print("USEA")
-    
+        setSSMCommandSetting(main_USEA_list,'us-east-1')
+        
     if not main_USWE_list:
         print ("No USWE server in the list.")
     else:
-        print("USWE")
-        #setSSMCommandSetting(main_USWE_list,'us-west-2')
+        setSSMCommandSetting(main_USWE_list,'us-west-2')
 
 def envVarCheck(envVar):
   print(envVar)
@@ -42,15 +39,21 @@ def setSSMCommandSetting(set_serverlist,setRegion):
     runToday = date.today()
     runToday = runToday.strftime("%d%m%Y")
 
+    print(inputToolAction)
+    print(ssm_client)
+    
+
 
     if inputToolAction == 'Restart Action':
-        setCommandId = fnRebootServer(set_serverlist,ssm_client,runToday,setDocument)
+        #setCommandId = fnRebootServer(set_serverlist,ssm_client,runToday,setDocument)
+        print("Reboot")
     elif inputToolAction == 'Windows Update Health Check Action':
         setCommandId = fnCheckWindowsUpdate(set_serverlist,ssm_client,runToday,setDocument)
     elif inputToolAction == 'Services Action':
-        setCommandId = fnActionService(set_serverlist,ssm_client,runToday,setDocument)
+        print("Service")
+        #setCommandId = fnActionService(set_serverlist,ssm_client,runToday,setDocument)
 
-    print(setCommandId)
+    #print(setCommandId)
 
 
 def sortServerList(sortCSVfile):
@@ -121,7 +124,6 @@ def caseServerType(serverType):
         return "all-execute"   
 
 def fnRebootServer(rbtInstanceId,rbtSession,rbtDate,rbtDocument):
-    "test"
     rbtComment = ("Reboot Function" + "-" +rbtDate)
     rbtServiceAction = "CHECK"
     rbtServiceName = "NA"
