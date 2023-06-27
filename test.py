@@ -8,6 +8,7 @@ inputToolAction = os.environ['Execution']
 inputServiceCheck = os.environ['Service Check']
 #inputServiceType = os.environ['Server Type']
 mandatory_env_var = ["HotfixId_2019", "HotfixId_2012", "Service Name"]
+default_value="NA"
 print(inputToolAction)
 print(inputServiceCheck)
 
