@@ -4,6 +4,7 @@ import sys
 import os
 import pandas as pd
 
+from os import environ
 inputToolAction = os.environ['Execution']
 inputServiceCheck = os.environ['Service Check']
 print(inputToolAction)
