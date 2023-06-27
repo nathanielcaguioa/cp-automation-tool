@@ -20,6 +20,14 @@ inputServiceName = (os.environ['ServiceName'][:-1])
 inputHotfix2012 = (os.environ['HotfixId2012'][:-1])
 inputHotfix2019 = (os.environ['HotfixId2012'][:-1])
 
+test1 = envVarCheck('ServiceName')
+test2 = envVarCheck('HotfixId2019')
+test3 = envVarCheck('HotfixId2012')
+
+print(test1)
+print(test2)
+print(test3)
+
 #Env_new = envVarCheck('HotfixId2019')
 #Env_old = envVarCheck('HotfixId2012')
 #print(Env_old)
