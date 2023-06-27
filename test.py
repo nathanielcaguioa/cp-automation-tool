@@ -4,7 +4,8 @@ import sys
 import os
 import pandas as pd
 
-inputToolAction = os.environ['ToolAction']
+inputToolAction = os.environ['Tool Action']
+inputToolAction = os.environ['Service Check']
 inputServerType = os.environ['HotfixId_2019']
 print(inputToolAction)
 if(inputServerType):
