@@ -6,13 +6,13 @@ import pandas as pd
 
 inputToolAction = os.environ['Execution']
 inputServiceCheck = os.environ['Service Check']
-#inputServiceType = os.environ['Server Type']
+#inputServerType = os.environ['Server Type']
 default_value="NA"
 print(inputToolAction)
-print(inputServiceCheck)
+print(inputServerType)
 
-inputHotfix2012 = (os.environ.get('HotfixId_2019', default_value))
-inputHotfix2019 = (os.environ.get('HotfixId_2012', default_value))
+inputHotfix2012 = (os.environ.get('HotfixId_2019'))
+inputHotfix2019 = (os.environ.get('HotfixId_2012'))
 
 print(inputHotfix2012)
 print(inputHotfix2019)
