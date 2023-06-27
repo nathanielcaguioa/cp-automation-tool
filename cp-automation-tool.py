@@ -10,15 +10,17 @@ def mainFunction():
 
     main_USEA_list, main_USWE_list = sortServerList(csvFile)
 
+    print(main_USEA_list)
+    print(main_USWE_list)
     if not main_USEA_list:
         print ("No USEA server in the list.")
     else:
-        setSSMCommandSetting(main_USEA_list,'us-east-1')
+        #setSSMCommandSetting(main_USEA_list,'us-east-1')
     
     if not main_USWE_list:
         print ("No USWE server in the list.")
     else:
-        setSSMCommandSetting(main_USWE_list,'us-west-2')
+        #setSSMCommandSetting(main_USWE_list,'us-west-2')
 
 def envVarCheck(envVar):
   print(envVar)
