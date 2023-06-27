@@ -7,5 +7,9 @@ import pandas as pd
 inputToolAction = os.environ['ToolAction']
 inputServerType = os.environ['HotfixId_2019']
 print(inputToolAction)
-print(inputServerType)
-print(type(inputServerType))
+if(inputServerType):
+  print(type(inputServerType))
+
+else:
+  print("No value")
+  
