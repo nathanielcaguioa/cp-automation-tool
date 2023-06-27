@@ -8,3 +8,4 @@ inputToolAction = os.environ['ToolAction']
 inputServerType = os.environ['HotfixId_2019']
 print(inputToolAction)
 print(inputServerType)
+print(type(inputServerType))
