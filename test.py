@@ -6,7 +6,7 @@ import pandas as pd
 
 inputToolAction = os.environ['Execution']
 inputServiceCheck = os.environ['Service Check']
-#inputServerType = os.environ['Server Type']
+inputServerType = os.environ['Server Type']
 default_value="NA"
 print(inputToolAction)
 print(inputServerType)
