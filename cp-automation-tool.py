@@ -42,15 +42,16 @@ def setSSMCommandSetting(set_serverlist,setRegion):
 
 
     if inputToolAction == 'Restart Action':
-        #setCommandId = fnRebootServer(set_serverlist,ssm_client,runToday,setDocument)
+        setCommandId = fnRebootServer(set_serverlist,ssm_client,runToday,setDocument)
         print("Reboot")
     elif inputToolAction == 'Windows Update Health Check Action':
         setCommandId = fnCheckWindowsUpdate(set_serverlist,ssm_client,runToday,setDocument)
+        print("WindowsUpdate")
     elif inputToolAction == 'Service Action':
         print("Service")
         #setCommandId = fnActionService(set_serverlist,ssm_client,runToday,setDocument)
 
-    print(setCommandId)
+    #print(setCommandId)
 
 
 def sortServerList(sortCSVfile):
@@ -126,6 +127,13 @@ def fnRebootServer(rbtInstanceId,rbtSession,rbtDate,rbtDocument):
     rbtServiceName = "NA"
     rbtHotfix2012 = "NA"
     rbtHotfix2019 = "NA"
+
+    print(rbtInstanceId)
+    print(rbtSession)
+    print(rbtDate)
+    print(rbtComment)
+    print(rbtDocument)
+    
 
 
     rbtCommandId=runSSMCommand("REBOOT",rbtInstanceId,rbtComment,rbtDocument,rbtSession,rbtServiceAction,rbtServiceName,rbtHotfix2012,rbtHotfix2019)
