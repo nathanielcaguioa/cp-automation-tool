@@ -38,9 +38,6 @@ def setSSMCommandSetting(set_serverlist,setRegion):
     ssm_client = boto3.client('ssm',region_name=setRegion)
     runToday = date.today()
     runToday = runToday.strftime("%d%m%Y")
-
-    print(inputToolAction)
-    print(ssm_client)
     
 
 
@@ -49,11 +46,11 @@ def setSSMCommandSetting(set_serverlist,setRegion):
         print("Reboot")
     elif inputToolAction == 'Windows Update Health Check Action':
         setCommandId = fnCheckWindowsUpdate(set_serverlist,ssm_client,runToday,setDocument)
-    elif inputToolAction == 'Services Action':
+    elif inputToolAction == 'Service Action':
         print("Service")
         #setCommandId = fnActionService(set_serverlist,ssm_client,runToday,setDocument)
 
-    #print(setCommandId)
+    print(setCommandId)
 
 
 def sortServerList(sortCSVfile):
