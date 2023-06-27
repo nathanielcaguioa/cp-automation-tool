@@ -5,12 +5,10 @@ import os
 import pandas as pd
 
 inputToolAction = os.environ['Execution']
-inputToolAction = os.environ['Service Check']
-inputServerType = os.environ['HotfixId_2019']
+inputServiceCheck = os.environ['Service Check']
 print(inputToolAction)
-if(inputServerType):
-  print(type(inputServerType))
-
-else:
-  print("No value")
-  
+print(inputServiceCheck)
+REQUIRED_ENV_VARS = {"HotfixId_2019", "HotfixId_2012"}
+diff = REQUIRED_ENV_VARS.difference(environ)
+if len(diff) > 0:
+    raise EnvironmentError(f'Failed because {diff} are not set')
