@@ -11,8 +11,8 @@ default_value="NA"
 print(inputToolAction)
 print(inputServerType)
 
-inputHotfix2012 = (os.environ.get('HotfixId_2019'))
-inputHotfix2019 = (os.environ.get('HotfixId_2012'))
+inputHotfix2012 = (os.environ.get(['HotfixId_2019']))
+inputHotfix2019 = (os.environ.get(['HotfixId_2012']))
 
 print(inputHotfix2012)
 print(inputHotfix2019)
