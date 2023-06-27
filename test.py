@@ -11,8 +11,12 @@ default_value="NA"
 print(inputToolAction)
 print(inputServerType)
 
-inputHotfix2012 = (os.environ.get(['HotfixId_2019']))
-inputHotfix2019 = (os.environ.get(['HotfixId_2012']))
+#inputHotfix2012 = (os.environ.get(['HotfixID_2012']))
+#inputHotfix2019 = (os.environ.get(['HotfixID_2019']))
 
-print(inputHotfix2012)
-print(inputHotfix2019)
+server = os.environ.get('HotfixID_2012', 'youtube.com')
+server2 = os.environ.get('HotfixID_2019', 'NA')
+
+
+print(server)
+print(server2)
