@@ -5,6 +5,7 @@ import os
 import pandas as pd
 
 def envVarCheck(envVar):
+  print(envVar)
   if envVar in os.environ:
     envVar = os.environ[envVar]
   else:
@@ -15,12 +16,13 @@ def envVarCheck(envVar):
 inputToolAction = os.environ['Execution']
 inputServiceCheck = os.environ['Service Check']
 inputServerType = os.environ['Server Type']
-default_value="NA"
+inputHotfix2012 = os.environ['HotfixID_2012']
+inputHotfix2019 = os.environ['HotfixID_2019']
 print(inputToolAction)
-print(inputServerType)
+print(inputHotfix2012)
+print(inputHotfix2019)
 
-#inputHotfix2012 = (os.environ.get(['HotfixID_2012']))
-#inputHotfix2019 = (os.environ.get(['HotfixID_2019']))
+
 
 #server = os.environ.get('HotfixID_2012', 'youtube.com')
 #server2 = os.environ.get('HotfixID_2019', 'NA')
