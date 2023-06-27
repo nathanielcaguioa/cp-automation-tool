@@ -5,10 +5,11 @@ import os
 import pandas as pd
 
 def envVarCheck(envVar):
-  if os.environ[envVar] is null:
-    envVar = "NA"
-  else:
+  if envVar in os.environ:
     envVar = os.environ[envVar]
+  else:
+    envVar = "NA"
+    
   return envVar
 
 inputToolAction = os.environ['Execution']
@@ -25,7 +26,9 @@ print(inputServerType)
 #server2 = os.environ.get('HotfixID_2019', 'NA')
 
 Env2019 = envVarCheck('HotfixID_2019')
+Env2012 = envVarCheck('HotfixID_2012')
 print(Env2019)
+print(Env2012)
 
 
 
