@@ -20,11 +20,20 @@ def mainFunction():
     else:
         setSSMCommandSetting(main_USWE_list,'us-west-2')
 
+def envVarCheck(envVar):
+  print(envVar)
+  if envVar == ',':
+    envVar = "NA"
+  else:
+    envVar = os.environ[envVar]
+
+  envVar = (envVar[:-1])
+  return envVar
 
 def setSSMCommandSetting(set_serverlist,setRegion):
 
     from datetime import date
-    inputToolAction = os.environ['Tool Action']
+    inputToolAction = os.environ['Execution']
     setDocument = 'cp-automationtool'
     ssm_client = boto3.client('ssm',region_name=setRegion)
     runToday = date.today()
@@ -32,11 +41,13 @@ def setSSMCommandSetting(set_serverlist,setRegion):
 
 
     if inputToolAction == 'Restart Action':
-        fnRebootServer(set_serverlist,ssm_client,runToday,setDocument)
+        setCommandId = fnRebootServer(set_serverlist,ssm_client,runToday,setDocument)
     elif inputToolAction == 'Windows Update Health Check Action':
-        fnCheckWindowsUpdate(set_serverlist,ssm_client,runToday,setDocument)
+        setCommandId = fnCheckWindowsUpdate(set_serverlist,ssm_client,runToday,setDocument)
     elif inputToolAction == 'Services Action':
-        fnActionService(set_serverlist,ssm_client,runToday,setDocument)
+        setCommandId = fnActionService(set_serverlist,ssm_client,runToday,setDocument)
+
+    print(setCommandId)
 
 
 def sortServerList(sortCSVfile):
@@ -119,7 +130,7 @@ def fnRebootServer(rbtInstanceId,rbtSession,rbtDate,rbtDocument):
     return rbtCommandId
 
 def fnActionService(actInstanceId,actSession,actDate,actDocument):
-    inputServiceName = os.environ['Service Name']
+    inputServiceName = envVarCheck('ServiceName')
     inputServiceCheck = os.environ['Service Check']
     actHotfix2012 = "NA"
     actHotfix2019 = "NA"
@@ -131,8 +142,8 @@ def fnActionService(actInstanceId,actSession,actDate,actDocument):
     
 
 def fnCheckWindowsUpdate(chkInstanceId,chkSession,chkDate,chkDocument):
-    inputHotfix2012 = os.environ['Hotfix ID Win2012']
-    inputHotfix2019 = os.environ['Hotfix ID Win2019']
+    inputHotfix2012 = envVarCheck('HotfixId2012')
+    inputHotfix2019 = envVarCheck('HotfixId2019')
     chkServiceAction = "CHECK"
     chkServiceName = "NA"
 
