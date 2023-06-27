@@ -49,7 +49,7 @@ def setSSMCommandSetting(set_serverlist,setRegion):
         print("WindowsUpdate")
     elif inputToolAction == 'Service Action':
         print("Service")
-        #setCommandId = fnActionService(set_serverlist,ssm_client,runToday,setDocument)
+        setCommandId = fnActionService(set_serverlist,ssm_client,runToday,setDocument)
 
     #print(setCommandId)
 
