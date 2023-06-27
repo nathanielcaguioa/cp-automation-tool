@@ -16,8 +16,9 @@ def envVarCheck(envVar):
 inputToolAction = os.environ['Execution']
 inputServiceCheck = os.environ['Service Check']
 inputServerType = os.environ['Server Type']
-inputHotfix2012 = os.environ['HotfixId2012']
-inputHotfix2019 = os.environ['HotfixId2019']
+inputServiceName = (os.environ['ServiceName'][:-1])
+inputHotfix2012 = (os.environ['HotfixId2012'][:-1])
+inputHotfix2019 = (os.environ['HotfixId2012'][:-1])
 
 #Env_new = envVarCheck('HotfixId2019')
 #Env_old = envVarCheck('HotfixId2012')
