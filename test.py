@@ -18,19 +18,11 @@ inputServiceCheck = os.environ['Service Check']
 inputServerType = os.environ['Server Type']
 inputHotfix2012 = os.environ['HotfixId2012']
 inputHotfix2019 = os.environ['HotfixId2019']
-print(inputToolAction)
-print(inputHotfix2012)
-print(inputHotfix2019)
 
-
-
-#server = os.environ.get('HotfixID_2012', 'youtube.com')
-#server2 = os.environ.get('HotfixID_2019', 'NA')
-
-Env_new = envVarCheck('HotfixId2019')
-Env_old = envVarCheck('HotfixId2012')
-print(Env_old)
-print(Env_new)
+#Env_new = envVarCheck('HotfixId2019')
+#Env_old = envVarCheck('HotfixId2012')
+#print(Env_old)
+#print(Env_new)
 
 
 
