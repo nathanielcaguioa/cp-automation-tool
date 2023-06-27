@@ -7,7 +7,6 @@ import pandas as pd
 def mainFunction():
 
     csvFile = 'cp-automation-tool-server-list.csv'
-
     main_USEA_list, main_USWE_list = sortServerList(csvFile)
 
     print(main_USEA_list)
@@ -16,10 +15,12 @@ def mainFunction():
         print ("No USEA server in the list.")
     else:
         #setSSMCommandSetting(main_USEA_list,'us-east-1')
+        print("USEA")
     
     if not main_USWE_list:
         print ("No USWE server in the list.")
     else:
+        print("USWE")
         #setSSMCommandSetting(main_USWE_list,'us-west-2')
 
 def envVarCheck(envVar):
