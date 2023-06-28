@@ -93,9 +93,9 @@ def sortServerList(sortCSVfile):
         sortRegion = caseRegion(rowRegion)
 
         sortServerExist = verInstance(rowInstanceId,sortRegion)
-        if sortServerExist == "OKAY" and rowRegion == "USEA":
+        if sortServerExist == "running" and rowRegion == "USEA":
             sortUSEAInstances.append(rowInstanceId)
-        elif sortServerExist == "OKAY" and rowRegion == "USWE":
+        elif sortServerExist == "running" and rowRegion == "USWE":
             sortUSWEInstances.append(rowInstanceId)
     
     return sortUSEAInstances,sortUSWEInstances
@@ -109,8 +109,9 @@ def verInstance(verInstanceId,verRegion):
         response = ec2_client.describe_instance_status(
             InstanceIds=[verInstanceId],
         )
+        verStatus = (response['InstanceStatuses'][0]['InstanceState']['Name'])
         print(response)
-        return "OKAY"
+        return verStatus
     except:
         print(verInstanceId + " has an issue with this instance.")
         return ("An exception occurred")
