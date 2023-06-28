@@ -110,7 +110,7 @@ def verInstance(verInstanceId,verRegion):
             InstanceIds=[verInstanceId],
         )
         verStatus = (response['InstanceStatuses'][0]['InstanceState']['Name'])
-        print(response)
+        print(verStatus)
         return verStatus
     except:
         print(verInstanceId + " has an issue with this instance.")
