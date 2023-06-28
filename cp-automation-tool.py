@@ -14,12 +14,14 @@ def mainFunction():
     if not main_USEA_list:
         print ("No USEA server in the list.")
     else:
-        setSSMCommandSetting(main_USEA_list,'us-east-1')
+        print("Test")
+        #setSSMCommandSetting(main_USEA_list,'us-east-1')
         
     if not main_USWE_list:
         print ("No USWE server in the list.")
     else:
-        setSSMCommandSetting(main_USWE_list,'us-west-2')
+        print("Test1")
+        #setSSMCommandSetting(main_USWE_list,'us-west-2')
 
 
 
