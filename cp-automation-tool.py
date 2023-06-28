@@ -20,6 +20,8 @@ def mainFunction():
     else:
         setSSMCommandSetting(main_USWE_list,'us-west-2')
 
+
+
 def envVarCheck(envVar):
   print(envVar)
   if envVar == ',':
@@ -40,18 +42,30 @@ def setSSMCommandSetting(set_serverlist,setRegion):
     runToday = runToday.strftime("%d%m%Y")
     
 
-
-    if inputToolAction == 'Restart Action':
-        setCommandId = fnRebootServer(set_serverlist,ssm_client,runToday,setDocument)
-        print("Reboot")
-    elif inputToolAction == 'Windows Update Health Check Action':
-        setCommandId = fnCheckWindowsUpdate(set_serverlist,ssm_client,runToday,setDocument)
-        print("WindowsUpdate")
-    elif inputToolAction == 'Service Action':
-        print("Service")
-        setCommandId = fnActionService(set_serverlist,ssm_client,runToday,setDocument)
-
-    #print(setCommandId)
+    for i in range(0, len(set_serverlist), 50):
+        limited_serverlist = set_serverlist[i : i + 50]
+        print(limited_serverlist)
+        if inputToolAction == 'Restart Action':
+            setCommandId = fnRebootServer(limited_serverlist,ssm_client,runToday,setDocument)
+            print("Reboot")
+        elif inputToolAction == 'Windows Update Health Check Action':
+            setCommandId = fnCheckWindowsUpdate(limited_serverlist,ssm_client,runToday,setDocument)
+            print("WindowsUpdate")
+        elif inputToolAction == 'Service Action':
+            print("Service")
+            setCommandId = fnActionService(limited_serverlist,ssm_client,runToday,setDocument)
+    
+        print(setCommandId)
+        #Checking status of command
+        checkCommandStatus(curSession=ssm_client,commandId=setCommandId,instances=limited_serverlist)
+        print("Printing output...")
+        #printing output
+        for instance in limited_serverlist:
+            output = ssm_client.get_command_invocation(CommandId=setCommandId,InstanceId=instance)
+            results = str(output['StandardOutputContent'])
+            instanceIDresult = str(output['InstanceId']) 
+            commandIDresult = str(output['CommandId'])          
+            print("Instance ID: " + instanceIDresult "Command ID: " + commandIDresult +  results)
 
 
 def sortServerList(sortCSVfile):
@@ -99,6 +113,7 @@ def verInstance(verInstanceId,verRegion):
         )
         return "OKAY"
     except:
+        print(verInstanceId + "has an issue with this instance.")
         return ("An exception occurred")
 
 
@@ -187,6 +202,36 @@ def caseRegion(region):
         return "us-west-2"
     elif region == 'ALL':
         return "all"     
+
+def checkCommandStatus(curSession,commandId,instances):
+    inProgress = True
+
+    #If instances is not a list, convert it to a list
+
+    if not isinstance(instances, list):
+        instances = [instances]
+    x = 0
+    while x < 3:    
+        ssmStatus = []
+        #print("Waiting 5 seconds before checking status...")
+        time.sleep(5)
+        for ssmInstances in instances:
+            #print(ssmInstances)
+            output = curSession.get_command_invocation(
+            CommandId=commandId,
+            InstanceId=ssmInstances
+            )
+            ssmStatus.append(str(output['StatusDetails']))
+            #print("Command ID: " + str(output['CommandId']) + " Instance: " + \
+                #str(output['InstanceId']) + " Status: " + str(output['StatusDetails']))
+
+        #Check back in 5 minutes to avoid hammering the commection with status requests
+        if (ssmStatus != 'Success'):
+            #print("Waiting 5 secs before checking back")
+            time.sleep(5)
+        else:
+            break
+        x=x+1
     
 
 mainFunction()
