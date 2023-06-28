@@ -14,14 +14,12 @@ def mainFunction():
     if not main_USEA_list:
         print ("No USEA server in the list.")
     else:
-        print("Test")
-        #setSSMCommandSetting(main_USEA_list,'us-east-1')
+        setSSMCommandSetting(main_USEA_list,'us-east-1')
         
     if not main_USWE_list:
         print ("No USWE server in the list.")
     else:
-        print("Test1")
-        #setSSMCommandSetting(main_USWE_list,'us-west-2')
+        setSSMCommandSetting(main_USWE_list,'us-west-2')
 
 
 
@@ -110,7 +108,6 @@ def verInstance(verInstanceId,verRegion):
             InstanceIds=[verInstanceId],
         )
         verStatus = (response['InstanceStatuses'][0]['InstanceState']['Name'])
-        print(verStatus)
         return verStatus
     except:
         print(verInstanceId + " has an issue with this instance.")
