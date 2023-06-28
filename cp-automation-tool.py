@@ -71,7 +71,7 @@ def sortServerList(sortCSVfile):
 
 
     if sortServerType == "db-execute":
-        filterProduct = filter_df.query('servertype.str.contains("DB|APFS|Web")')
+        filterProduct = filter_df.query('servertype.str.contains("DB|APFS|WEB")')
     elif sortServerType == "wadm-execute":
         filterProduct = filter_df.query('servertype.str.contains("WADM")')
     elif sortServerType == "app-execute":
