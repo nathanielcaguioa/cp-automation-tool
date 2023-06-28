@@ -107,6 +107,7 @@ def verInstance(verInstanceId,verRegion):
         response = ec2_client.describe_instance_status(
             InstanceIds=[verInstanceId],
         )
+        print(response)
         return "OKAY"
     except:
         print(verInstanceId + " has an issue with this instance.")
