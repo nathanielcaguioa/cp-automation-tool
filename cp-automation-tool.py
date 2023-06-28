@@ -65,7 +65,7 @@ def setSSMCommandSetting(set_serverlist,setRegion):
             results = str(output['StandardOutputContent'])
             instanceIDresult = str(output['InstanceId']) 
             commandIDresult = str(output['CommandId'])          
-            print("Instance ID: " + instanceIDresult "Command ID: " + commandIDresult +  results)
+            print("Instance ID: " + instanceIDresult + "Command ID: " + commandIDresult + results)
 
 
 def sortServerList(sortCSVfile):
