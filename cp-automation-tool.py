@@ -24,7 +24,6 @@ def mainFunction():
 
 
 def envVarCheck(envVar):
-  print(envVar)
   if envVar == ',':
     envVar = "NA"
   else:
@@ -48,15 +47,11 @@ def setSSMCommandSetting(set_serverlist,setRegion):
         print(limited_serverlist)
         if inputToolAction == 'Restart Action':
             setCommandId = fnRebootServer(limited_serverlist,ssm_client,runToday,setDocument)
-            print("Reboot")
         elif inputToolAction == 'Windows Update Health Check Action':
             setCommandId = fnCheckWindowsUpdate(limited_serverlist,ssm_client,runToday,setDocument)
-            print("WindowsUpdate")
         elif inputToolAction == 'Service Action':
-            print("Service")
             setCommandId = fnActionService(limited_serverlist,ssm_client,runToday,setDocument)
     
-        print(setCommandId)
         #Checking status of command
         checkCommandStatus(curSession=ssm_client,commandId=setCommandId,instances=limited_serverlist)
         print("Printing output...")
@@ -66,7 +61,7 @@ def setSSMCommandSetting(set_serverlist,setRegion):
             results = str(output['StandardOutputContent'])
             instanceIDresult = str(output['InstanceId']) 
             commandIDresult = str(output['CommandId'])          
-            print("Instance ID: " + instanceIDresult + "Command ID: " + commandIDresult + results)
+            print("Instance ID: " + instanceIDresult + "\nCommand ID: " + commandIDresult + "\n" + results)
 
 
 def sortServerList(sortCSVfile):
@@ -143,12 +138,6 @@ def fnRebootServer(rbtInstanceId,rbtSession,rbtDate,rbtDocument):
     rbtServiceName = "NA"
     rbtHotfix2012 = "NA"
     rbtHotfix2019 = "NA"
-
-    print(rbtInstanceId)
-    print(rbtSession)
-    print(rbtDate)
-    print(rbtComment)
-    print(rbtDocument)
     
 
 
