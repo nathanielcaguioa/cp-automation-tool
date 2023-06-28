@@ -109,7 +109,7 @@ def verInstance(verInstanceId,verRegion):
         )
         return "OKAY"
     except:
-        print(verInstanceId + "has an issue with this instance.")
+        print(verInstanceId + " has an issue with this instance.")
         return ("An exception occurred")
 
 
