@@ -38,13 +38,12 @@ def verInstanceSSMStatus(verInstanceId,verRegion):
     try:
         response = ssm_client.describe_instance_information(
             InstanceInformationFilterList=[
-            Filters=[
-                {
+            Filters=[{
                     'Key': 'InstanceIds',
                     'Values': [
                         verInstanceId,
                     ]
-                },
+                }
             ]
         )
         return(response)
