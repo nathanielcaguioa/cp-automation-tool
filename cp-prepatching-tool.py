@@ -28,8 +28,10 @@ def setSSMCommandSetting(set_serverlist,setRegion):
     runToday = date.today()
     runToday = runToday.strftime("%d%m%Y")
     setComment = ("Prepatching Function" + "-" +runToday)
-
-    runSSMCommand(ssm_client,set_serverlist,setComment,setDocument)
+    for i in range(0, len(set_serverlist), 50):
+        limited_serverlist = set_serverlist[i : i + 50]
+        print(limited_serverlist)
+        runSSMCommand(ssm_client,limited_serverlist,setComment,setDocument)
 
 
 def verInstance(verInstanceId,verRegion):
