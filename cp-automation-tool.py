@@ -92,13 +92,34 @@ def sortServerList(sortCSVfile):
 
         sortServerExist = verInstance(rowInstanceId,sortRegion)
         if sortServerExist == "running" and rowRegion == "USEA":
-            sortUSEAInstances.append(rowInstanceId)
+            sortSSMStatus = verInstanceSSMStatus(rowInstanceId,sortRegion)
+            if sortSSMStatus == "Online":
+                sortUSEAInstances.append(rowInstanceId)
+            
         elif sortServerExist == "running" and rowRegion == "USWE":
-            sortUSWEInstances.append(rowInstanceId)
+            sortSSMStatus = verInstanceSSMStatus(rowInstanceId,sortRegion)
+            if sortSSMStatus == "Online":
+                sortUSWEInstances.append(rowInstanceId)
     
     return sortUSEAInstances,sortUSWEInstances
     
 
+def verInstanceSSMStatus(verInstanceId,verRegion):
+    ssm_client = boto3.client('ssm',region_name=verRegion)
+    try:
+        response = ssm_client.describe_instance_information(
+            Filters=[{
+                    'Key': 'InstanceIds',
+                    'Values': [
+                        verInstanceId,
+                    ]
+                }
+            ]
+        )
+        return(response['InstanceInformationList'][0]['PingStatus'])
+    except:
+        print(verInstanceId + " there is a CONNECTION LOST in SSM. Cannot do RUNCommmand.")
+        return ("An exception occurred")
 
 def verInstance(verInstanceId,verRegion):
     
