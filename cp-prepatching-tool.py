@@ -45,7 +45,7 @@ def verInstanceSSMStatus(verInstanceId,verRegion):
                 }
             ]
         )
-        return(response)
+        return(response['InstanceInformationList'][0]['PingStatus'])
     except:
         print(verInstanceId + " there is a CONNECTION LOST in SSM. Cannot do RUNCommmand.")
         return ("An exception occurred")
