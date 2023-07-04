@@ -31,7 +31,7 @@ def setSSMCommandSetting(set_serverlist,setRegion):
     for i in range(0, len(set_serverlist), 30):
         limited_serverlist = set_serverlist[i : i + 30]
         print(limited_serverlist)
-        #runSSMCommand(ssm_client,limited_serverlist,setComment,setDocument)
+        runSSMCommand(ssm_client,limited_serverlist,setComment,setDocument)
 
 def verInstanceSSMStatus(verInstanceId,verRegion):
     ssm_client = boto3.client('ssm',region_name=verRegion)
@@ -93,12 +93,14 @@ def sortServerList(sortCSVfile):
         sortServerExist = verInstance(rowInstanceId,sortRegion)
         if sortServerExist == "running" and rowRegion == "USEA":
             sortSSMStatus = verInstanceSSMStatus(rowInstanceId,sortRegion)
-            print(sortSSMStatus)
-            sortUSEAInstances.append(rowInstanceId)
+            if sortSSMStatus == "Online":
+                sortUSEAInstances.append(rowInstanceId)
+            
         elif sortServerExist == "running" and rowRegion == "USWE":
             sortSSMStatus = verInstanceSSMStatus(rowInstanceId,sortRegion)
-            print(sortSSMStatus)
-            sortUSWEInstances.append(rowInstanceId)
+            if sortSSMStatus == "Online":
+                sortUSWEInstances.append(rowInstanceId)
+            
     
     return sortUSEAInstances,sortUSWEInstances
 
