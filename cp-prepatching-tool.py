@@ -37,7 +37,6 @@ def verInstanceSSMStatus(verInstanceId,verRegion):
     ssm_client = boto3.client('ssm',region_name=verRegion)
     try:
         response = ssm_client.describe_instance_information(
-            InstanceInformationFilterList=[
             Filters=[{
                     'Key': 'InstanceIds',
                     'Values': [
