@@ -41,7 +41,6 @@ def verInstance(verInstanceId,verRegion):
         response = ec2_client.describe_instance_status(
             InstanceIds=[verInstanceId],
         )
-        print(response)
         verStatus = (response['InstanceStatuses'][0]['InstanceState']['Name'])
         return verStatus
     except:
