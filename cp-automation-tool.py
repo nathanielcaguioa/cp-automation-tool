@@ -42,8 +42,8 @@ def setSSMCommandSetting(set_serverlist,setRegion):
     runToday = runToday.strftime("%d%m%Y")
     
 
-    for i in range(0, len(set_serverlist), 50):
-        limited_serverlist = set_serverlist[i : i + 50]
+    for i in range(0, len(set_serverlist), 30):
+        limited_serverlist = set_serverlist[i : i + 30]
         print(limited_serverlist)
         if inputToolAction == 'Restart Action':
             setCommandId = fnRebootServer(limited_serverlist,ssm_client,runToday,setDocument)
