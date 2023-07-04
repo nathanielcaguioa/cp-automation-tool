@@ -73,9 +73,9 @@ def sortServerList(sortCSVfile):
         sortRegion = caseRegion(rowRegion)
 
         sortServerExist = verInstance(rowInstanceId,sortRegion)
-        if sortServerExist == "OKAY" and rowRegion == "USEA":
+        if sortServerExist == "running" and rowRegion == "USEA":
             sortUSEAInstances.append(rowInstanceId)
-        elif sortServerExist == "OKAY" and rowRegion == "USWE":
+        elif sortServerExist == "running" and rowRegion == "USWE":
             sortUSWEInstances.append(rowInstanceId)
     
     return sortUSEAInstances,sortUSWEInstances
