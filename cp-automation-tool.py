@@ -226,7 +226,7 @@ def checkCommandStatus(curSession,commandId,instances):
     while x < 3:    
         ssmStatus = []
         #print("Waiting 5 seconds before checking status...")
-        time.sleep(5)
+        time.sleep(10)
         for ssmInstances in instances:
             #print(ssmInstances)
             output = curSession.get_command_invocation(
