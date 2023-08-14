@@ -36,7 +36,7 @@ def setSSMCommandSetting(set_serverlist,setRegion):
 
     from datetime import date
     inputToolAction = os.environ['Execution']
-    setDocument = 'cp-automationtool'
+    setDocument = 'sre-infra-automation'
     ssm_client = boto3.client('ssm',region_name=setRegion)
     runToday = date.today()
     runToday = runToday.strftime("%d%m%Y")
