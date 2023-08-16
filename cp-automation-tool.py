@@ -89,7 +89,7 @@ def sortServerList(sortCSVfile):
     elif sortServerType == "all-execute":
         filterProduct = filter_df
 
-    sortRegion = caseRegion(rowRegion)
+   
     sortUSEAInstances = []
     sortUSWEInstances = []
     sortCACEInstances = []
@@ -102,6 +102,8 @@ def sortServerList(sortCSVfile):
         rowServerName = row['servername']
         rowInstanceId = row['instanceid']
         rowRegion = rowServerName[0:4]
+
+        sortRegion = caseRegion(rowRegion)
 
         sortServerExist = verInstance(rowInstanceId,sortRegion)
         sortSSMStatus = verInstanceSSMStatus(rowInstanceId,sortRegion)
