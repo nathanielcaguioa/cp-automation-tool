@@ -7,7 +7,7 @@ import pandas as pd
 
 def mainFunction():
 
-    csvFile = inputToolAction = os.environ['Server List - CSV']
+    csvFile = os.environ['Server List - CSV']
     main_USEA_list, main_USWE_list = sortServerList(csvFile)
 
 
