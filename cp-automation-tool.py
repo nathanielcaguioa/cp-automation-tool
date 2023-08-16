@@ -8,19 +8,29 @@ import pandas as pd
 def mainFunction():
 
     csvFile = os.environ['Server List - CSV']
-    main_USEA_list, main_USWE_list = sortServerList(csvFile)
+    mainList = sortServerList(csvFile)
 
-
-    if not main_USEA_list:
-        print ("No USEA server in the list.")
+    for index, mainServerList in enumerate(mainList):
+        if index == 0:
+            sendCommandSettings(mainServerList,'us-east-1')
+        elif index == 1:
+            sendCommandSettings(mainServerList,'us-west-2')
+        elif index == 2:
+            sendCommandSettings(mainServerList,'ca-central-1')
+        elif index == 3:
+            sendCommandSettings(mainServerList,'eu-central-1')
+        elif index == 4:
+            sendCommandSettings(mainServerList,'eu-west-1')
+        elif index == 5:
+            sendCommandSettings(mainServerList,'ap-southeast-1')
+        elif index == 6:
+            sendCommandSettings(mainServerList,'ap-southeast-2')
+            
+def sendCommandSettings(sendServerList,sendRegion)
+    if not sendServerList:
+        print ("No server provided in this region: " + sendRegion)
     else:
-        setSSMCommandSetting(main_USEA_list,'us-east-1')
-        
-    if not main_USWE_list:
-        print ("No USWE server in the list.")
-    else:
-        setSSMCommandSetting(main_USWE_list,'us-west-2')
-
+        setSSMCommandSetting(sendServerList,sendRegion)
 
 
 def envVarCheck(envVar):
@@ -79,30 +89,40 @@ def sortServerList(sortCSVfile):
     elif sortServerType == "all-execute":
         filterProduct = filter_df
 
+    sortRegion = caseRegion(rowRegion)
     sortUSEAInstances = []
     sortUSWEInstances = []
-
-
+    sortCACEInstances = []
+    sortEUWEInstances = []
+    sortEUCEInstances = []
+    sortAPSPInstances = []
+    sortAPAUInstances = []
+    
     for index, row in filterProduct.iterrows():
         rowServerName = row['servername']
         rowInstanceId = row['instanceid']
         rowRegion = rowServerName[0:4]
 
-        sortRegion = caseRegion(rowRegion)
-
         sortServerExist = verInstance(rowInstanceId,sortRegion)
-        if sortServerExist == "running" and rowRegion == "USEA":
-            sortSSMStatus = verInstanceSSMStatus(rowInstanceId,sortRegion)
-            if sortSSMStatus == "Online":
+        sortSSMStatus = verInstanceSSMStatus(rowInstanceId,sortRegion)
+        if sortServerExist == "running" and sortSSMStatus == "Online":
+
+            if rowRegion == "USEA":
                 sortUSEAInstances.append(rowInstanceId)
-            
-        elif sortServerExist == "running" and rowRegion == "USWE":
-            sortSSMStatus = verInstanceSSMStatus(rowInstanceId,sortRegion)
-            if sortSSMStatus == "Online":
+            elif rowRegion == "USWE":
                 sortUSWEInstances.append(rowInstanceId)
-    
-    return sortUSEAInstances,sortUSWEInstances
-    
+            elif rowRegion == "CACE":
+                sortCACEInstances.append(rowInstanceId)
+            elif rowRegion == "EUCE":
+                sortEUCEInstances.append(rowInstanceId)
+            elif rowRegion == "EUWE":
+                sortEUWEInstances.append(rowInstanceId)
+            elif rowRegion == "APSP":
+                sortAPSPInstances.append(rowInstanceId)
+            elif rowRegion == "APAU":
+                sortAPAUInstances.append(rowInstanceId)
+    sortList = [sortUSEAInstances, sortUSWEInstances, sortCACEInstances, sortEUCEInstances, sortEUWEInstances, sortAPSPInstances, sortAPAUInstances]
+    return sortList
 
 def verInstanceSSMStatus(verInstanceId,verRegion):
     ssm_client = boto3.client('ssm',region_name=verRegion)
@@ -144,6 +164,7 @@ def filterData(filterFile):
             filterInstances.append(rowServer)
     
     return filterInstances
+    
 def caseServerType(serverType):
     if serverType == 'DB - APFS - Web':
         return "db-execute"
