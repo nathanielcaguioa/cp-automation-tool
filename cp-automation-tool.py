@@ -7,7 +7,7 @@ import pandas as pd
 
 def mainFunction():
 
-    csvFile = 'cp-automation-tool-server-list.csv'
+    csvFile = inputToolAction = os.environ['Server List - CSV']
     main_USEA_list, main_USWE_list = sortServerList(csvFile)
 
 
