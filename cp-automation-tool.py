@@ -212,8 +212,18 @@ def caseRegion(region):
         return "us-east-1"
     elif region == 'USWE':
         return "us-west-2"
-    elif region == 'ALL':
-        return "all"     
+    if region == 'CACE':
+        return "ca-central-1"
+    elif region == 'EUWE':
+        return "eu-west-1"
+    elif region == 'EUCE':
+        return "eu-central-1"     
+    if region == 'APSP':
+        return "ap-southeast-1"
+    elif region == 'APAU':
+        return "ap-southeast-2" 
+
+        
 
 def checkCommandStatus(curSession,commandId,instances):
     inProgress = True
