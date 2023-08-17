@@ -25,6 +25,12 @@ def mainFunction():
         elif index == 6:
             sendCommandSettings(mainServerList,'ap-southeast-2')
 
+def sendCommandSettings(sendServerList,sendRegion):
+    if not sendServerList:
+        print ("No server provided in this region: " + sendRegion)
+    else:
+        setSSMCommandSetting(sendServerList,sendRegion)
+
 def setSSMCommandSetting(set_serverlist,setRegion):
 
     from datetime import date
