@@ -97,19 +97,9 @@ def caseRegion(region):
         return "ap-southeast-2" 
 
 def sortServerList(sortCSVfile):
-    inputServerType = os.environ['Server Type']
+
     filter_df = pd.read_csv(sortCSVfile)
-    sortServerType = caseServerType(inputServerType)
-
-
-    if sortServerType == "db-execute":
-        filterProduct = filter_df.query('servertype.str.contains("DB|APFS|WEB")')
-    elif sortServerType == "wadm-execute":
-        filterProduct = filter_df.query('servertype.str.contains("WADM")')
-    elif sortServerType == "app-execute":
-        filterProduct = filter_df.query('servertype.str.contains("APP")')
-    elif sortServerType == "all-execute":
-        filterProduct = filter_df
+    filterProduct = filter_df.query('servertype.str.contains("DB")')
 
    
     sortUSEAInstances = []
