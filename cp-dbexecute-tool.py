@@ -6,19 +6,24 @@ import pandas as pd
 
 def mainFunction():
 
-    csvFile = 'cp-automation-tool-server-list.csv'
+    csvFile = os.environ['Server List - CSV']
+    mainList = sortServerList(csvFile)
 
-    main_USEA_list, main_USWE_list = sortServerList(csvFile)
-
-    if not main_USEA_list:
-        print ("No USEA server in the list.")
-    else:
-        setSSMCommandSetting(main_USEA_list,'us-east-1')
-    
-    if not main_USWE_list:
-        print ("No USWE server in the list.")
-    else:
-        setSSMCommandSetting(main_USWE_list,'us-west-2')
+    for index, mainServerList in enumerate(mainList):
+        if index == 0:
+            sendCommandSettings(mainServerList,'us-east-1')
+        elif index == 1:
+            sendCommandSettings(mainServerList,'us-west-2')
+        elif index == 2:
+            sendCommandSettings(mainServerList,'ca-central-1')
+        elif index == 3:
+            sendCommandSettings(mainServerList,'eu-central-1')
+        elif index == 4:
+            sendCommandSettings(mainServerList,'eu-west-1')
+        elif index == 5:
+            sendCommandSettings(mainServerList,'ap-southeast-1')
+        elif index == 6:
+            sendCommandSettings(mainServerList,'ap-southeast-2')
 
 def caseDBExecutionDocument(executionType):
     if executionType == 'START_DB':
@@ -80,19 +85,41 @@ def caseRegion(region):
         return "us-east-1"
     elif region == 'USWE':
         return "us-west-2"
-    elif region == 'ALL':
-        return "all"     
+    if region == 'CACE':
+        return "ca-central-1"
+    elif region == 'EUWE':
+        return "eu-west-1"
+    elif region == 'EUCE':
+        return "eu-central-1"     
+    if region == 'APSP':
+        return "ap-southeast-1"
+    elif region == 'APAU':
+        return "ap-southeast-2" 
 
 def sortServerList(sortCSVfile):
-
+    inputServerType = os.environ['Server Type']
     filter_df = pd.read_csv(sortCSVfile)
-    filterProduct = filter_df.query('servertype.str.contains("DB")')
+    sortServerType = caseServerType(inputServerType)
 
 
+    if sortServerType == "db-execute":
+        filterProduct = filter_df.query('servertype.str.contains("DB|APFS|WEB")')
+    elif sortServerType == "wadm-execute":
+        filterProduct = filter_df.query('servertype.str.contains("WADM")')
+    elif sortServerType == "app-execute":
+        filterProduct = filter_df.query('servertype.str.contains("APP")')
+    elif sortServerType == "all-execute":
+        filterProduct = filter_df
+
+   
     sortUSEAInstances = []
     sortUSWEInstances = []
-
-
+    sortCACEInstances = []
+    sortEUWEInstances = []
+    sortEUCEInstances = []
+    sortAPSPInstances = []
+    sortAPAUInstances = []
+    
     for index, row in filterProduct.iterrows():
         rowServerName = row['servername']
         rowInstanceId = row['instanceid']
@@ -101,18 +128,25 @@ def sortServerList(sortCSVfile):
         sortRegion = caseRegion(rowRegion)
 
         sortServerExist = verInstance(rowInstanceId,sortRegion)
-        if sortServerExist == "running" and rowRegion == "USEA":
-            sortSSMStatus = verInstanceSSMStatus(rowInstanceId,sortRegion)
-            if sortSSMStatus == "Online":
+        sortSSMStatus = verInstanceSSMStatus(rowInstanceId,sortRegion)
+        if sortServerExist == "running" and sortSSMStatus == "Online":
+
+            if rowRegion == "USEA":
                 sortUSEAInstances.append(rowInstanceId)
-            
-        elif sortServerExist == "running" and rowRegion == "USWE":
-            sortSSMStatus = verInstanceSSMStatus(rowInstanceId,sortRegion)
-            if sortSSMStatus == "Online":
+            elif rowRegion == "USWE":
                 sortUSWEInstances.append(rowInstanceId)
-            
-    
-    return sortUSEAInstances,sortUSWEInstances
+            elif rowRegion == "CACE":
+                sortCACEInstances.append(rowInstanceId)
+            elif rowRegion == "EUCE":
+                sortEUCEInstances.append(rowInstanceId)
+            elif rowRegion == "EUWE":
+                sortEUWEInstances.append(rowInstanceId)
+            elif rowRegion == "APSP":
+                sortAPSPInstances.append(rowInstanceId)
+            elif rowRegion == "APAU":
+                sortAPAUInstances.append(rowInstanceId)
+    sortList = [sortUSEAInstances, sortUSWEInstances, sortCACEInstances, sortEUCEInstances, sortEUWEInstances, sortAPSPInstances, sortAPAUInstances]
+    return sortList
 
 
 
